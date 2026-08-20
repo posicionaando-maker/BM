@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero & Jardín [Tu Nombre] - Plantas y Más</title>
+    <style>
+        /* ===== ESTILO NOVEDOSO Y ORGÁNICO ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f2; /* Fondo claro y natural */
+            color: #2e3b2e;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        /* ===== TIENDA (CATÁLOGO) ===== */
+        .tienda {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #1f4f2b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h1 span {
+            background: #2a5c3a;
+            color: #f0f7ec;
+            font-size: 0.8rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+
+        .subtitulo {
+            color: #5a6b4a;
+            margin-bottom: 20px;
+            font-style: italic;
+            border-left: 4px solid #7cb083;
+            padding-left: 15px;
+        }
+
+        /* Categorías (filtros visuales) */
+        .categorias {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .categoria-btn {
+            background: transparent;
+            border: 1px solid #b6c9ad;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #2e4a2e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .categoria-btn:hover, .categoria-btn.activa {
+            background: #2a5c3a;
+            color: white;
+            border-color: #2a5c3a;
+            box-shadow: 0 4px 8px rgba(42, 92, 58, 0.2);
+        }
+
+        /* ===== GRID DE TARJETAS ===== */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        /* Tarjeta base */
+        .producto-card {
+            background: white;
+            border-radius: 24px;
+            padding: 18px 15px 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: transform 0.25s ease, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #e6ede2;
+            position: relative;
+        }
+        .producto-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 30px rgba(60, 90, 50, 0.1);
+            border-color: #b9d2ae;
+        }
+
+        /* ===== TARJETA DESTACADA (ESTRELLA) ===== */
+        .producto-destacado {
+            background: #f4fcf0;
+            border: 2px solid #3d8c4a;
+            box-shadow: 0 8px 0 #2b6b36, 0 12px 25px rgba(45, 130, 60, 0.2);
+            transform: scale(1.02);
+            position: relative;
+        }
+        .producto-destacado:hover {
+            transform: scale(1.04) translateY(-4px);
+        }
+        .producto-destacado::before {
+            content: "⭐ DESTACADO";
+            position: absolute;
+            top: -12px;
+            right: 10px;
+            background: #d4a743;
+            color: #1f2e1a;
+            font-weight: bold;
+            font-size: 0.65rem;
+            padding: 4px 14px;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .producto-destacado .emoji-icon {
+            font-size: 3.8rem;
+            background: #e2f0db;
+            padding: 8px;
+            border-radius: 60px;
+        }
+
+        /* Elementos comunes de la tarjeta */
+        .emoji-icon {
+            font-size: 3.2rem;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .producto-nombre {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1f3a1f;
+            margin: 8px 0 4px;
+        }
+        .producto-desc {
+            font-size: 0.75rem;
+            color: #5b7053;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            min-height: 2.6em;
+        }
+        .producto-precio {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1e4b2a;
+            background: #edf5e8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            margin-bottom: 14px;
+        }
+        .btn-agregar {
+            background: #2a5c3a;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            max-width: 140px;
+        }
+        .btn-agregar:hover {
+            background: #1d4529;
+            transform: scale(0.96);
+            box-shadow: 0 4px 10px rgba(42, 92, 58, 0.3);
+        }
+
+        /* ===== CARRITO (LATERAL) ===== */
+        .carrito {
+            flex: 1;
+            min-width: 260px;
+            background: white;
+            border-radius: 30px;
+            padding: 25px 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            border: 1px solid #dde8d6;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+        }
+        .carrito h2 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #1f3f1f;
+            border-bottom: 2px solid #c7dbc0;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .carrito #contador-carrito {
+            background: #2a5c3a;
+            color: white;
+            border-radius: 40px;
+            padding: 0 12px;
+            font-size: 0.9rem;
+        }
+        #lista-carrito {
+            list-style: none;
+            margin: 15px 0;
+            max-height: 340px;
+            overflow-y: auto;
+        }
+        #lista-carrito li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #d6e3ce;
+            font-size: 0.9rem;
+        }
+        .carrito-total {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #174d24;
+            margin: 15px 0;
+            text-align: right;
+        }
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-whatsapp:hover {
+            background: #1da851;
+            transform: scale(0.98);
+        }
+        .btn-vaciar {
+            background: transparent;
+            border: none;
+            color: #7f8f76;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .container { flex-direction: column; }
+            .carrito { position: static; }
+            .producto-destacado { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== TIENDA ===== -->
+        <div class="tienda">
+            <h1>
+                🌱 Vivero & Jardín
+                <span>Novedades</span>
+            </h1>
+            <div class="subtitulo">🌿 Cultiva tu espacio con estilo y naturaleza</div>
+
+            <!-- Categorías (filtro visual, puedes agregar funcionalidad después) -->
+            <div class="categorias">
+                <button class="categoria-btn activa">🌱 Todos</button>
+                <button class="categoria-btn">🌿 Plantas</button>
+                <button class="categoria-btn">🏺 Macetas</button>
+                <button class="categoria-btn">🧪 Sustratos</button>
+                <button class="categoria-btn">🍂 Abonos</button>
+            </div>
+
+            <!-- GRID DE PRODUCTOS -->
+            <div class="grid-productos" id="productosGrid">
+                <!-- TARJETA DESTACADA (Kit Jardín Urbano) -->
+                <div class="producto-card producto-destacado">
+                    <div class="emoji-icon">🌻</div>
+                    <div class="producto-nombre">Kit Jardín Urbano</div>
+                    <div class="producto-desc">Maceta + sustrato + 3 semillas de girasol</div>
+                    <div class="producto-precio">$2.490</div>
+                    <button class="btn-agregar" data-nombre="Kit Jardín Urbano" data-precio="2490">➕ Agregar</button>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="producto-card">
+                    <div class="emoji-icon">🌵</div>
+                    <div class="producto-nombre">Suculenta Echeveria</div>
+                    <div class="producto-desc">Planta resistente, ideal para interior</div>
+                    <div class="producto-precio">$890</div>
+                    <button class="btn-agregar" data-nombre="Suculenta Echeveria" data-precio="890">➕ Agregar</button>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="producto-card">
+                    <div class="emoji-icon">🏺</div>
+                    <div class="producto-nombre">Maceta de Barro 20cm</div>
+                    <div class="producto-desc">Cocida a mano, con drenaje</div>
+                    <div class="producto-precio">$1.250</div>
+                    <button class="btn-agregar" data-nombre="Maceta de Barro 20cm" data-precio="1250">➕ Agregar</button>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="producto-card">
+                    <div class="emoji-icon">🧪</div>
+                    <div class="producto-nombre">Sustrato Premium 5L</div>
+                    <div class="producto-desc">Con turba, perlita y humus</div>
+                    <div class="producto-precio">$1.800</div>
+                    <button class="btn-agregar" data-nombre="Sustrato Premium 5L" data-precio="1800">➕ Agregar</button>
+                </div>
+
+                <!-- Producto 5 -->
+                <div class="producto-card">
+                    <div class="emoji-icon">🍂</div>
+                    <div class="producto-nombre">Abono Orgánico Líquido</div>
+                    <div class="producto-desc">500ml, estimula el crecimiento</div>
+                    <div class="producto-precio">$1.100</div>
+                    <button class="btn-agregar" data-nombre="Abono Orgánico Líquido" data-precio="1100">➕ Agregar</button>
+                </div>
+
+                <!-- Producto 6 -->
+                <div class="producto-card">
+                    <div class="emoji-icon">🌿</div>
+                    <div class="producto-nombre">Helecho Cebra</div>
+                    <div class="producto-desc">Follaje decorativo, purifica el aire</div>
+                    <div class="producto-precio">$1.950</div>
+                    <button class="btn-agregar" data-nombre="Helecho Cebra" data-precio="1950">➕ Agregar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CARRITO DE COMPRAS ===== -->
+        <div class="carrito" id="carrito">
+            <h2>
+                🛒 Tu Pedido
+                <span id="contador-carrito">0</span>
+            </h2>
+            <ul id="lista-carrito">
+                <!-- Los items se agregan dinámicamente aquí -->
+                <li style="color: #9aae8e; justify-content: center; padding: 20px 0;">Aún no has agregado nada</li>
+            </ul>
+            <div class="carrito-total" id="total-carrito">Total: $0.00</div>
+            <button class="btn-whatsapp" id="enviarWhatsApp">📱 Enviar Pedido por WhatsApp</button>
+            <button class="btn-vaciar" id="vaciarCarrito">🗑️ Vaciar carrito</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== LÓGICA DEL CARRITO (MISMA FILOSOFÍA QUE LA FERRETERÍA) =====
+        let carrito = [];
+
+        // Referencias DOM
+        const listaCarrito = document.getElementById('lista-carrito');
+        const totalCarrito = document.getElementById('total-carrito');
+        const contadorCarrito = document.getElementById('contador-carrito');
+        const vaciarBtn = document.getElementById('vaciarCarrito');
+        const enviarBtn = document.getElementById('enviarWhatsApp');
+
+        // Función para renderizar el carrito
+        function renderizarCarrito() {
+            listaCarrito.innerHTML = '';
+            if (carrito.length === 0) {
+                listaCarrito.innerHTML = '<li style="color: #9aae8e; justify-content: center; padding: 20px 0;">Aún no has agregado nada</li>';
+                totalCarrito.textContent = 'Total: $0.00';
+                contadorCarrito.textContent = '0';
+                return;
+            }
+
+            let total = 0;
+            carrito.forEach((item, index) => {
+                total += item.precio * item.cantidad;
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.nombre} (x${item.cantidad})</span>
+                    <span>$${(item.precio * item.cantidad).toFixed(0)}</span>
+                    <button style="background:none;border:none;color:#b14f4f;cursor:pointer;font-weight:bold;" data-index="${index}">✕</button>
+                `;
+                listaCarrito.appendChild(li);
+            });
+
+            totalCarrito.textContent = `Total: $${total.toFixed(0)}`;
+            contadorCarrito.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+
+            // Agregar evento para eliminar item individual
+            document.querySelectorAll('#lista-carrito li button').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const index = parseInt(this.dataset.index);
+                    carrito.splice(index, 1);
+                    renderizarCarrito();
+                });
+            });
+        }
+
+        // Función para agregar producto
+        function agregarProducto(nombre, precio) {
+            const existente = carrito.find(item => item.nombre === nombre);
+            if (existente) {
+                existente.cantidad += 1;
+            } else {
+                carrito.push({ nombre, precio: parseInt(precio), cantidad: 1 });
+            }
+            renderizarCarrito();
+        }
+
+        // Escuchar clics en todos los botones "Agregar"
+        document.querySelectorAll('.btn-agregar').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const nombre = this.dataset.nombre;
+                const precio = this.dataset.precio;
+                agregarProducto(nombre, precio);
+            });
+        });
+
+        // Vaciar carrito
+        vaciarBtn.addEventListener('click', function() {
+            carrito = [];
+            renderizarCarrito();
+        });
+
+        // Enviar pedido por WhatsApp (mismo formato)
+        enviarBtn.addEventListener('click', function() {
+            if (carrito.length === 0) {
+                alert('Agrega productos al carrito primero.');
+                return;
+            }
+
+            let mensaje = '🌿 *Nuevo Pedido Vivero & Jardín* 🌿\n';
+            let total = 0;
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                mensaje += `• ${item.nombre} (x${item.cantidad}) → $${subtotal}\n`;
+                total += subtotal;
+            });
+            mensaje += `\n💰 *Total: $${total}*`;
+            mensaje += `\n\n📦 ¡Gracias por tu compra! Envíame tu dirección.`;
+
+            // Reemplaza el número con el TUYO (incluye código de país sin +)
+            const numeroWhatsApp = '5491123456789'; // <--- CAMBIA ESTE NÚMERO
+            const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        });
+
+        // Inicializar carrito
+        renderizarCarrito();
+    </script>
+</body>
+</html>
