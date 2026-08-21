@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Vivero & Jardín</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header>
+            <h1>🌱 Panel de Administración</h1>
+            <p>Gestiona el catálogo de productos de Vivero & Jardín</p>
+        </header>
+
+        <div class="admin-grid">
+            <!-- FORMULARIO -->
+            <div class="form-section">
+                <h2 id="formTitle">Agregar Producto</h2>
+                <form id="productForm">
+                    <input type="hidden" id="productId" value="">
+                    
+                    <div class="form-group">
+                        <label>Nombre del Producto *</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categoría *</label>
+                        <select id="categoria" required>
+                            <option value="plantas">🌿 Plantas</option>
+                            <option value="macetas">🏺 Macetas</option>
+                            <option value="sustratos">🧪 Sustratos</option>
+                            <option value="abonos">🍂 Abonos</option>
+                            <option value="herramientas">🔧 Herramientas</option>
+                            <option value="kits">🎁 Kits</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Precio ($) *</label>
+                        <input type="number" id="precio" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción *</label>
+                        <textarea id="descripcion" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input type="number" id="stock" min="0" value="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Código de Producto</label>
+                        <input type="text" id="codigo" placeholder="Ej: PLA-001">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ruta de Imagen Principal</label>
+                        <input type="text" id="imagen" placeholder="img/productos/ejemplo.jpg">
+                        <small>Coloca las imágenes en: /img/productos/</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ruta de Miniatura</label>
+                        <input type="text" id="thumbnail" placeholder="img/thumbnails/ejemplo.jpg">
+                        <small>Coloca las miniaturas en: /img/thumbnails/ (80x80px)</small>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="destacado">
+                            Marcar como Destacado
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="ofertas">
+                            En Ofertas Especiales
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Etiquetas (separadas por coma)</label>
+                        <input type="text" id="etiquetas" placeholder="ej: suculenta, interior, resistencia">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">💾 Guardar Producto</button>
+                        <button type="button" class="btn-secondary" id="btnCancelar">❌ Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- LISTA DE PRODUCTOS -->
+            <div class="list-section">
+                <h2>📦 Productos</h2>
+                <div class="list-actions">
+                    <button class="btn-download" id="btnDescargarJSON">⬇️ Descargar JSON</button>
+                    <button class="btn-upload" id="btnCargarJSON">📤 Cargar JSON</button>
+                    <input type="file" id="fileInput" accept=".json" style="display:none;">
+                </div>
+                <div id="productosList" class="productos-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>
