@@ -2,130 +2,1051 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivero & Jardín - Tienda Natural</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🌱 Vivero & Jardín - Móvil</title>
+    
+    <!-- Estilos optimizados para móvil -->
+    <style>
+        /* ===== RESET Y VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --verde: #2a5c3a;
+            --verde-claro: #4a8c5a;
+            --verde-pastel: #e8f5e3;
+            --crema: #f5f0e8;
+            --texto: #1f331f;
+            --sombra: 0 4px 15px rgba(0,0,0,0.08);
+            --radio: 16px;
+        }
+        
+        body {
+            font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #f8faf5;
+            color: var(--texto);
+            padding: 10px 10px 100px 10px;
+            line-height: 1.5;
+        }
+        
+        /* ===== NAVBAR (Menú Hamburguesa) ===== */
+        .navbar {
+            background: white;
+            padding: 12px 16px;
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+            margin-bottom: 16px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--verde);
+        }
+        .logo-icon { font-size: 1.6rem; }
+        
+        /* Botón Hamburguesa */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: var(--verde-pastel);
+            border: none;
+            padding: 10px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 48px;
+            min-height: 48px;
+            justify-content: center;
+            align-items: center;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--verde);
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* Menú desplegable */
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            flex-direction: column;
+            padding: 16px;
+            gap: 8px;
+            border-radius: 0 0 var(--radio) var(--radio);
+            box-shadow: var(--sombra);
+            margin-top: 8px;
+            list-style: none;
+        }
+        .nav-menu.active {
+            display: flex;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--texto);
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            background: var(--verde-pastel);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 48px;
+        }
+        .nav-menu a:active {
+            background: var(--verde-claro);
+            color: white;
+        }
+        .btn-pdf {
+            background: var(--verde) !important;
+            color: white !important;
+            justify-content: center;
+            border: none;
+            font-weight: 600;
+        }
+        
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--verde-pastel), #d4e8cc);
+            padding: 2rem 1.5rem;
+            border-radius: var(--radio);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #1a3a24;
+        }
+        .hero p {
+            color: #3d5a3d;
+            margin: 8px 0 16px;
+            font-size: 1rem;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .hero-stats div {
+            background: rgba(255,255,255,0.7);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(4px);
+        }
+        .hero-stats span {
+            font-weight: 700;
+            color: var(--verde);
+        }
+        
+        /* ===== BUSCADOR ===== */
+        .search-container {
+            max-width: 400px;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+        #buscador {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dce8d4;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.2s;
+            min-height: 48px;
+        }
+        #buscador:focus {
+            outline: none;
+            border-color: var(--verde-claro);
+            box-shadow: 0 0 0 3px rgba(74, 140, 90, 0.15);
+        }
+        #resultados-busqueda {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: var(--radio);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            display: none;
+            z-index: 100;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .resultado-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #edf2ea;
+            cursor: pointer;
+            min-height: 56px;
+        }
+        .resultado-item:active {
+            background: var(--verde-pastel);
+        }
+        .resultado-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .resultado-info {
+            flex: 1;
+        }
+        .resultado-info .nombre {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .resultado-info .categoria {
+            font-size: 0.75rem;
+            color: #7a8f7a;
+        }
+        .resultado-info .precio {
+            font-weight: 600;
+            color: var(--verde);
+        }
+        
+        /* ===== FILTROS (Scroll horizontal) ===== */
+        .filtros-wrapper {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 4px 0 12px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            margin-bottom: 4px;
+        }
+        .filtros-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        .filtros-container {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 4px;
+        }
+        .filtro-btn {
+            padding: 10px 20px;
+            border: 2px solid #d4e0cc;
+            border-radius: 40px;
+            background: transparent;
+            color: var(--texto);
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            min-height: 44px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .filtro-btn:active {
+            transform: scale(0.95);
+        }
+        .filtro-btn.active {
+            background: var(--verde);
+            color: white;
+            border-color: var(--verde);
+        }
+        
+        /* ===== GRID DE PRODUCTOS (2 columnas en móvil) ===== */
+        .grid-productos,
+        .grid-ofertas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 4px 0;
+        }
+        
+        .producto-card {
+            background: white;
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .producto-card:active {
+            transform: scale(0.98);
+        }
+        .producto-card .imagen-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: var(--verde-pastel);
+            overflow: hidden;
+            position: relative;
+        }
+        .producto-card .imagen-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .producto-card .info {
+            padding: 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .producto-card .nombre {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+        .producto-card .categoria-tag {
+            font-size: 0.65rem;
+            color: #7a8f7a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .producto-card .descripcion {
+            font-size: 0.75rem;
+            color: #5a6f5a;
+            flex: 1;
+            margin: 4px 0 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .producto-card .precio {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--verde);
+            margin-bottom: 8px;
+        }
+        .producto-card .btn-agregar {
+            background: var(--verde);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            min-height: 44px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        .producto-card .btn-agregar:active {
+            transform: scale(0.95);
+            background: #1d4529;
+        }
+        
+        /* Tarjeta destacada */
+        .producto-card.destacado {
+            border: 2px solid #d4a743;
+            position: relative;
+        }
+        .producto-card.destacado::before {
+            content: "⭐";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #d4a743;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+        
+        /* ===== OFERTAS ===== */
+        .ofertas-section {
+            background: linear-gradient(135deg, #fdf6e8, #fff8f0);
+            padding: 20px 0;
+            border-radius: var(--radio);
+            margin: 20px 0;
+        }
+        .ofertas-section .section-header {
+            padding: 0 16px;
+        }
+        
+        /* ===== CONTACTO ===== */
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .contacto-item {
+            background: white;
+            padding: 16px;
+            border-radius: var(--radio);
+            text-align: center;
+            box-shadow: var(--sombra);
+        }
+        .contacto-item .icono {
+            font-size: 2rem;
+            display: block;
+        }
+        .contacto-item h3 {
+            font-size: 0.85rem;
+            color: #7a8f7a;
+            margin: 4px 0;
+        }
+        .contacto-item p {
+            font-size: 0.85rem;
+            word-break: break-word;
+        }
+        .contacto-item a {
+            color: var(--verde);
+            text-decoration: none;
+        }
+        
+        /* ===== CARRITO FLOTANTE ===== */
+        .carrito-flotante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+        .carrito-toggle {
+            background: var(--verde);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(42, 92, 58, 0.4);
+            cursor: pointer;
+            position: relative;
+            min-height: 60px;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carrito-toggle:active {
+            transform: scale(0.92);
+        }
+        .carrito-toggle #contador-carrito {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .carrito-panel {
+            position: absolute;
+            bottom: 76px;
+            right: 0;
+            width: 320px;
+            max-width: calc(100vw - 40px);
+            background: white;
+            border-radius: var(--radio);
+            padding: 20px;
+            box-shadow: 0 12px 50px rgba(0,0,0,0.2);
+            display: none;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .carrito-panel.active {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .carrito-panel h3 {
+            margin-bottom: 12px;
+            color: var(--verde);
+            font-size: 1.1rem;
+        }
+        #lista-carrito {
+            list-style: none;
+            margin-bottom: 12px;
+        }
+        #lista-carrito li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #edf2ea;
+            font-size: 0.9rem;
+            align-items: center;
+        }
+        #lista-carrito li button {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+        .carrito-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: right;
+            color: var(--verde);
+            margin-bottom: 12px;
+        }
+        .btn-whatsapp {
+            width: 100%;
+            padding: 14px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            min-height: 48px;
+        }
+        .btn-whatsapp:active {
+            transform: scale(0.97);
+        }
+        .btn-vaciar {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: #999;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        
+        /* ===== UTILIDADES ===== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .section-header h2 {
+            font-weight: 300;
+            font-size: 1.6rem;
+            color: #1a3a24;
+        }
+        .section-header p {
+            color: #5a6f5a;
+            font-size: 0.95rem;
+        }
+        .text-center { text-align: center; }
+        .mt-16 { margin-top: 16px; }
+        .mb-16 { margin-bottom: 16px; }
+        .w-full { width: 100%; }
+        
+        /* ===== RESPONSIVE (Tablet/Desktop) ===== */
+        @media (min-width: 600px) {
+            .grid-productos,
+            .grid-ofertas {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+            .contacto-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            body {
+                padding: 20px 40px 100px 40px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .grid-productos,
+            .grid-ofertas {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+            .navbar {
+                padding: 16px 24px;
+            }
+            .menu-toggle {
+                display: none;
+            }
+            .nav-menu {
+                display: flex !important;
+                position: static;
+                flex-direction: row;
+                padding: 0;
+                gap: 12px;
+                background: transparent;
+                box-shadow: none;
+                margin-top: 0;
+                width: auto;
+            }
+            .nav-menu a {
+                background: transparent;
+                padding: 8px 16px;
+                min-height: auto;
+            }
+            .nav-menu a:hover {
+                background: var(--verde-pastel);
+            }
+            .btn-pdf {
+                background: var(--verde) !important;
+                color: white !important;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- ===== MENÚ HAMBURGUESA ===== -->
-    <nav class="navbar">
-        <div class="logo">
-            <span class="logo-icon">🌱</span>
-            <span class="logo-text">Vivero & Jardín</span>
-        </div>
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="#inicio" class="active">🏠 Inicio</a></li>
-            <li><a href="#catalogo">📚 Catálogo</a></li>
-            <li><a href="#ofertas">⭐ Ofertas</a></li>
-            <li><a href="#contacto">📞 Contacto</a></li>
-            <li><button id="descargarPDF" class="btn-pdf">📄 Descargar PDF</button></li>
-        </ul>
-    </nav>
 
-    <!-- ===== CONTENIDO PRINCIPAL ===== -->
-    <main>
-        <!-- SECCIÓN INICIO -->
-        <section id="inicio" class="hero">
-            <div class="hero-content">
-                <h1>🌿 Cultiva tu Paraíso Verde</h1>
-                <p>Descubre nuestra selección de plantas, macetas y accesorios para crear el jardín de tus sueños</p>
-                
-            </div>
-        </section>
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <div class="logo">
+        <span class="logo-icon">🌱</span>
+        <span>Vivero & Jardín</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+        <li><a href="#inicio">🏠 Inicio</a></li>
+        <li><a href="#catalogo">📚 Catálogo</a></li>
+        <li><a href="#ofertas">⭐ Ofertas</a></li>
+        <li><a href="#contacto">📞 Contacto</a></li>
+        <li><button class="btn-pdf" id="descargarPDF">📄 Descargar PDF</button></li>
+    </ul>
+</nav>
 
-        <!-- SECCIÓN CATÁLOGO -->
-        <section id="catalogo" class="catalogo">
-            <div class="section-header">
-                <h2>🌻 Nuestro Catálogo</h2>
-                <div class="search-container">
-                    <input type="text" id="buscador" placeholder="🔍 Buscar plantas, macetas, sustratos..." autocomplete="off">
-                    <div id="resultados-busqueda"></div>
-                </div>
-            </div>
+<!-- ===== HERO ===== -->
+<section id="inicio" class="hero">
+    <h1>🌿 Cultiva tu Paraíso Verde</h1>
+    <p>Plantas, macetas y accesorios para tu hogar</p>
+    <div class="hero-stats">
+        <div><span>+200</span> Clientes</div>
+        <div><span>50+</span> Especies</div>
+        <div><span>100%</span> Natural</div>
+    </div>
+</section>
 
-            <div class="filtros-categoria">
-                <button class="filtro-btn active" data-categoria="todos">🌱 Todos</button>
-                <button class="filtro-btn" data-categoria="plantas">🌿 Plantas</button>
-                <button class="filtro-btn" data-categoria="macetas">🏺 Macetas</button>
-                <button class="filtro-btn" data-categoria="sustratos">🧪 Sustratos</button>
-                <button class="filtro-btn" data-categoria="abonos">🍂 Abonos</button>
-                <button class="filtro-btn" data-categoria="herramientas">🔧 Herramientas</button>
-                <button class="filtro-btn" data-categoria="kits">🎁 Kits</button>
-            </div>
-
-            <div class="grid-productos" id="productosGrid"></div>
-        </section>
-
-        <!-- SECCIÓN OFERTAS -->
-        <section id="ofertas" class="ofertas">
-            <div class="section-header">
-                <h2>⭐ Ofertas Especiales</h2>
-                <p>Productos seleccionados con descuentos imperdibles</p>
-            </div>
-            <div class="grid-ofertas" id="ofertasGrid"></div>
-        </section>
-
-        <!-- SECCIÓN CONTACTO -->
-        <section id="contacto" class="contacto">
-            <div class="section-header">
-                <h2>📞 Contacto</h2>
-                <p>Estamos aquí para ayudarte a crear tu espacio verde</p>
-            </div>
-            <div class="contacto-info">
-                <div class="contacto-item">
-                    <span class="contacto-icon">📱</span>
-                    <div>
-                        <h3>WhatsApp</h3>
-                        <p><a href="https://wa.me/5491123456789">+54 911 2345-6789</a></p>
-                    </div>
-                </div>
-                <div class="contacto-item">
-                    <span class="contacto-icon">📧</span>
-                    <div>
-                        <h3>Email</h3>
-                        <p><a href="mailto:info@viveroyjardin.com">info@viveroyjardin.com</a></p>
-                    </div>
-                </div>
-                <div class="contacto-item">
-                    <span class="contacto-icon">📍</span>
-                    <div>
-                        <h3>Dirección</h3>
-                        <p>Av. Jardines 1234, Ciudad Verde</p>
-                    </div>
-                </div>
-                <div class="contacto-item">
-                    <span class="contacto-icon">🕐</span>
-                    <div>
-                        <h3>Horario</h3>
-                        <p>Lun-Sáb: 0900am - 1130 am</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ===== CARRITO LATERAL ===== -->
-    <div class="carrito-flotante" id="carrito">
-        <button class="carrito-toggle" id="carritoToggle">
-            🛒 <span id="contador-carrito">0</span>
-        </button>
-        <div class="carrito-panel" id="carritoPanel">
-            <h3>Tu Pedido</h3>
-            <ul id="lista-carrito"></ul>
-            <div class="carrito-total" id="total-carrito">Total: $0.00</div>
-            <button class="btn-whatsapp" id="enviarWhatsApp">📱 Enviar por WhatsApp</button>
-            <button class="btn-vaciar" id="vaciarCarrito">🗑️ Vaciar carrito</button>
+<!-- ===== CATÁLOGO ===== -->
+<section id="catalogo">
+    <div class="section-header">
+        <h2>🌻 Nuestro Catálogo</h2>
+        <div class="search-container">
+            <input type="text" id="buscador" placeholder="🔍 Buscar plantas, macetas..." autocomplete="off">
+            <div id="resultados-busqueda"></div>
         </div>
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
-    <script src="js/app.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/pdf-generator.js"></script>
+    <!-- Filtros (scroll horizontal) -->
+    <div class="filtros-wrapper">
+        <div class="filtros-container">
+            <button class="filtro-btn active" data-categoria="todos">🌱 Todos</button>
+            <button class="filtro-btn" data-categoria="plantas">🌿 Plantas</button>
+            <button class="filtro-btn" data-categoria="macetas">🏺 Macetas</button>
+            <button class="filtro-btn" data-categoria="sustratos">🧪 Sustratos</button>
+            <button class="filtro-btn" data-categoria="abonos">🍂 Abonos</button>
+            <button class="filtro-btn" data-categoria="herramientas">🔧 Herramientas</button>
+            <button class="filtro-btn" data-categoria="kits">🎁 Kits</button>
+        </div>
+    </div>
+
+    <div class="grid-productos" id="productosGrid">
+        <p class="text-center" style="grid-column:1/-1;color:#7a8f7a;padding:20px;">Cargando productos...</p>
+    </div>
+</section>
+
+<!-- ===== OFERTAS ===== -->
+<section id="ofertas" class="ofertas-section">
+    <div class="section-header">
+        <h2>⭐ Ofertas Especiales</h2>
+        <p>¡Aprovecha estas promociones!</p>
+    </div>
+    <div class="grid-ofertas" id="ofertasGrid">
+        <p class="text-center" style="grid-column:1/-1;color:#7a8f7a;padding:20px;">Cargando ofertas...</p>
+    </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+    <div class="section-header">
+        <h2>📞 Contacto</h2>
+        <p>Estamos para ayudarte</p>
+    </div>
+    <div class="contacto-grid">
+        <div class="contacto-item">
+            <span class="icono">📱</span>
+            <h3>WhatsApp</h3>
+            <p><a href="https://wa.me/5491123456789">+54 911 2345-6789</a></p>
+        </div>
+        <div class="contacto-item">
+            <span class="icono">📧</span>
+            <h3>Email</h3>
+            <p><a href="mailto:info@viveroyjardin.com">info@viveroyjardin.com</a></p>
+        </div>
+        <div class="contacto-item">
+            <span class="icono">📍</span>
+            <h3>Dirección</h3>
+            <p>Av. Jardines 1234</p>
+        </div>
+        <div class="contacto-item">
+            <span class="icono">🕐</span>
+            <h3>Horario</h3>
+            <p>Lun-Sáb 8am-8pm</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CARRITO FLOTANTE ===== -->
+<div class="carrito-flotante">
+    <button class="carrito-toggle" id="carritoToggle">
+        🛒 <span id="contador-carrito">0</span>
+    </button>
+    <div class="carrito-panel" id="carritoPanel">
+        <h3>🛒 Tu Pedido</h3>
+        <ul id="lista-carrito">
+            <li style="text-align:center;color:#999;padding:12px 0;">Carrito vacío</li>
+        </ul>
+        <div class="carrito-total" id="total-carrito">Total: $0.00</div>
+        <button class="btn-whatsapp" id="enviarWhatsApp">📱 Enviar por WhatsApp</button>
+        <button class="btn-vaciar" id="vaciarCarrito">🗑️ Vaciar carrito</button>
+    </div>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+    // ===== DATOS Y LÓGICA PRINCIPAL =====
+    let productos = [];
+    let carrito = [];
+
+    // Cargar productos desde data.json
+    async function cargarDatos() {
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) throw new Error('No se pudo cargar data.json');
+            const data = await response.json();
+            productos = data.productos || [];
+            renderizarProductos(productos);
+            renderizarOfertas();
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('productosGrid').innerHTML = 
+                '<p style="grid-column:1/-1;text-align:center;color:#e74c3c;padding:20px;">⚠️ Error cargando productos. Verifica que data.json exista.</p>';
+            document.getElementById('ofertasGrid').innerHTML = 
+                '<p style="grid-column:1/-1;text-align:center;color:#7a8f7a;padding:20px;">No hay ofertas disponibles</p>';
+        }
+    }
+
+    function renderizarProductos(lista) {
+        const grid = document.getElementById('productosGrid');
+        if (!lista || lista.length === 0) {
+            grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#7a8f7a;padding:20px;">No hay productos disponibles</p>';
+            return;
+        }
+        
+        grid.innerHTML = lista.map(p => `
+            <div class="producto-card ${p.destacado ? 'destacado' : ''}">
+                <div class="imagen-container">
+                    <img src="${p.imagen || 'img/placeholder.jpg'}" alt="${p.nombre}" 
+                         loading="lazy" onerror="this.src='img/placeholder.jpg'">
+                </div>
+                <div class="info">
+                    <div class="nombre">${p.nombre}</div>
+                    <div class="categoria-tag">${p.categoria}</div>
+                    <div class="descripcion">${p.descripcion}</div>
+                    <div class="precio">$${p.precio.toFixed(0)}</div>
+                    <button class="btn-agregar" data-id="${p.id}">➕ Agregar</button>
+                </div>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('.btn-agregar').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.dataset.id);
+                const producto = productos.find(p => p.id === id);
+                if (producto) agregarAlCarrito(producto);
+            });
+        });
+    }
+
+    function renderizarOfertas() {
+        const grid = document.getElementById('ofertasGrid');
+        const ofertas = productos.filter(p => p.ofertas);
+        
+        if (ofertas.length === 0) {
+            grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#7a8f7a;padding:20px;">Pronto tendremos nuevas ofertas 🌱</p>';
+            return;
+        }
+        
+        grid.innerHTML = ofertas.map(p => `
+            <div class="producto-card">
+                <div class="imagen-container">
+                    <img src="${p.imagen || 'img/placeholder.jpg'}" alt="${p.nombre}"
+                         loading="lazy" onerror="this.src='img/placeholder.jpg'">
+                </div>
+                <div class="info">
+                    <div class="nombre">⭐ ${p.nombre}</div>
+                    <div class="categoria-tag">${p.categoria}</div>
+                    <div class="descripcion">${p.descripcion}</div>
+                    <div class="precio">$${p.precio.toFixed(0)}</div>
+                    <button class="btn-agregar" data-id="${p.id}">➕ Agregar</button>
+                </div>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('#ofertasGrid .btn-agregar').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.dataset.id);
+                const producto = productos.find(p => p.id === id);
+                if (producto) agregarAlCarrito(producto);
+            });
+        });
+    }
+
+    // ===== CARRITO =====
+    function agregarAlCarrito(producto) {
+        const existente = carrito.find(item => item.id === producto.id);
+        if (existente) {
+            existente.cantidad++;
+        } else {
+            carrito.push({ ...producto, cantidad: 1 });
+        }
+        actualizarCarrito();
+        // Feedback táctil
+        const btn = document.querySelector(`.btn-agregar[data-id="${producto.id}"]`);
+        if (btn) {
+            btn.textContent = '✅ Agregado';
+            setTimeout(() => { btn.textContent = '➕ Agregar'; }, 800);
+        }
+    }
+
+    function actualizarCarrito() {
+        const lista = document.getElementById('lista-carrito');
+        const total = document.getElementById('total-carrito');
+        const contador = document.getElementById('contador-carrito');
+        
+        if (carrito.length === 0) {
+            lista.innerHTML = '<li style="text-align:center;color:#999;padding:12px 0;">Carrito vacío</li>';
+            total.textContent = 'Total: $0.00';
+            contador.textContent = '0';
+            return;
+        }
+        
+        let totalPrecio = 0;
+        lista.innerHTML = carrito.map((item, index) => {
+            const subtotal = item.precio * item.cantidad;
+            totalPrecio += subtotal;
+            return `
+                <li>
+                    <span>${item.nombre} (x${item.cantidad})</span>
+                    <span>$${subtotal}</span>
+                    <button onclick="eliminarDelCarrito(${index})">✕</button>
+                </li>
+            `;
+        }).join('');
+        
+        total.textContent = `Total: $${totalPrecio.toFixed(0)}`;
+        contador.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    }
+
+    function eliminarDelCarrito(index) {
+        carrito.splice(index, 1);
+        actualizarCarrito();
+    }
+
+    // ===== BUSCADOR =====
+    const buscador = document.getElementById('buscador');
+    const resultados = document.getElementById('resultados-busqueda');
+    let timeout = null;
+
+    buscador.addEventListener('input', function() {
+        clearTimeout(timeout);
+        const termino = this.value.trim().toLowerCase();
+        
+        if (termino.length < 2) {
+            resultados.style.display = 'none';
+            return;
+        }
+
+        timeout = setTimeout(() => {
+            const coincidencias = productos.filter(p => 
+                p.nombre.toLowerCase().includes(termino) ||
+                p.categoria.toLowerCase().includes(termino) ||
+                p.descripcion.toLowerCase().includes(termino) ||
+                (p.etiquetas && p.etiquetas.some(tag => tag.toLowerCase().includes(termino)))
+            );
+
+            if (coincidencias.length === 0) {
+                resultados.innerHTML = '<div style="padding:16px;text-align:center;color:#999;">No se encontraron productos</div>';
+                resultados.style.display = 'block';
+                return;
+            }
+
+            resultados.innerHTML = coincidencias.slice(0, 10).map(p => `
+                <div class="resultado-item" data-id="${p.id}">
+                    <img src="${p.thumbnail || p.imagen || 'img/placeholder.jpg'}" alt="${p.nombre}" 
+                         onerror="this.src='img/placeholder.jpg'">
+                    <div class="resultado-info">
+                        <div class="nombre">${p.nombre}</div>
+                        <div class="categoria">${p.categoria}</div>
+                    </div>
+                    <div class="precio">$${p.precio.toFixed(0)}</div>
+                </div>
+            `).join('');
+
+            resultados.style.display = 'block';
+
+            document.querySelectorAll('.resultado-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const id = parseInt(this.dataset.id);
+                    const producto = productos.find(p => p.id === id);
+                    if (producto) {
+                        agregarAlCarrito(producto);
+                        buscador.value = '';
+                        resultados.style.display = 'none';
+                    }
+                });
+            });
+
+        }, 300);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-container')) {
+            resultados.style.display = 'none';
+        }
+    });
+
+    // ===== EVENTOS =====
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarDatos();
+
+        // Menú hamburguesa
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('navMenu');
+        toggle.addEventListener('click', function() {
+            menu.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+                toggle.classList.remove('active');
+            });
+        });
+
+        // Carrito
+        document.getElementById('carritoToggle').addEventListener('click', function() {
+            document.getElementById('carritoPanel').classList.toggle('active');
+        });
+
+        document.getElementById('vaciarCarrito').addEventListener('click', () => {
+            carrito = [];
+            actualizarCarrito();
+        });
+
+        document.getElementById('enviarWhatsApp').addEventListener('click', () => {
+            if (carrito.length === 0) {
+                alert('Agrega productos al carrito primero.');
+                return;
+            }
+            let mensaje = '🌿 *Nuevo Pedido Vivero & Jardín* 🌿\n';
+            let total = 0;
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                mensaje += `• ${item.nombre} (x${item.cantidad}) → $${subtotal}\n`;
+                total += subtotal;
+            });
+            mensaje += `\n💰 *Total: $${total}*`;
+            mensaje += `\n\n📦 ¡Gracias por tu compra!`;
+            const numero = '5491123456789'; // CAMBIA ESTE NÚMERO
+            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        });
+
+        // Filtros
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const categoria = this.dataset.categoria;
+                const filtrados = categoria === 'todos' 
+                    ? productos 
+                    : productos.filter(p => p.categoria === categoria);
+                renderizarProductos(filtrados);
+            });
+        });
+
+        // PDF (simple)
+        document.getElementById('descargarPDF').addEventListener('click', function() {
+            if (productos.length === 0) {
+                alert('No hay productos para generar el PDF.');
+                return;
+            }
+            let contenido = `
+                <!DOCTYPE html>
+                <html><head><meta charset="UTF-8">
+                <style>
+                    body { font-family: Arial; padding: 30px; max-width: 800px; margin: auto; color: #2d3d2d; }
+                    h1 { color: #2a5c3a; border-bottom: 2px solid #4a8c5a; padding-bottom: 10px; }
+                    .producto { border: 1px solid #d4e0cc; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+                    .producto h3 { margin: 0 0 4px; }
+                    .cat { color: #7a8f7a; font-size: 0.8rem; text-transform: uppercase; }
+                    .precio { font-weight: bold; color: #2a5c3a; float: right; }
+                    .desc { color: #5a6f5a; margin: 6px 0; }
+                    .footer { text-align: center; margin-top: 30px; color: #7a8f7a; border-top: 1px solid #d4e0cc; padding-top: 20px; }
+                </style>
+                </head><body>
+                <h1>🌿 Catálogo Vivero & Jardín</h1>
+                <p>${new Date().toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' })}</p>
+                ${productos.map(p => `
+                    <div class="producto">
+                        <h3>${p.nombre} <span class="precio">$${p.precio.toFixed(0)}</span></h3>
+                        <div class="cat">${p.categoria}</div>
+                        <div class="desc">${p.descripcion}</div>
+                    </div>
+                `).join('')}
+                <div class="footer">📱 WhatsApp: +54 911 2345-6789 | 📧 info@viveroyjardin.com</div>
+                </body></html>
+            `;
+            const ventana = window.open('', '_blank');
+            ventana.document.write(contenido);
+            ventana.document.close();
+            setTimeout(() => ventana.print(), 500);
+        });
+    });
+</script>
+
 </body>
 </html>
