@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>🌱 Vivero & Jardín - Móvil</title>
+    <title>🌱 Vivero & Jardín - Tienda Móvil</title>
     
-    <!-- Estilos optimizados para móvil -->
     <style>
         /* ===== RESET Y VARIABLES ===== */
         * {
@@ -60,7 +59,6 @@
         }
         .logo-icon { font-size: 1.6rem; }
         
-        /* Botón Hamburguesa */
         .menu-toggle {
             display: flex;
             flex-direction: column;
@@ -94,7 +92,6 @@
             transform: rotate(-45deg) translate(6px, -6px);
         }
         
-        /* Menú desplegable */
         .nav-menu {
             display: none;
             position: absolute;
@@ -282,7 +279,7 @@
             border-color: var(--verde);
         }
         
-        /* ===== GRID DE PRODUCTOS (2 columnas en móvil) ===== */
+        /* ===== GRID DE PRODUCTOS ===== */
         .grid-productos,
         .grid-ofertas {
             display: grid;
@@ -367,7 +364,6 @@
             background: #1d4529;
         }
         
-        /* Tarjeta destacada */
         .producto-card.destacado {
             border: 2px solid #d4a743;
             position: relative;
@@ -429,13 +425,14 @@
             text-decoration: none;
         }
         
-        /* ===== CARRITO FLOTANTE ===== */
+        /* ===== CARRITO MEJORADO ===== */
         .carrito-flotante {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 2000;
         }
+        
         .carrito-toggle {
             background: var(--verde);
             color: white;
@@ -452,10 +449,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
-        .carrito-toggle:active {
-            transform: scale(0.92);
+        
+        .carrito-toggle.abierto {
+            background: #c0392b;
+            transform: rotate(90deg);
         }
+        
         .carrito-toggle #contador-carrito {
             position: absolute;
             top: -4px;
@@ -478,27 +479,49 @@
             right: 0;
             width: 320px;
             max-width: calc(100vw - 40px);
+            max-height: 60vh;
             background: white;
             border-radius: var(--radio);
             padding: 20px;
-            box-shadow: 0 12px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 12px 50px rgba(0,0,0,0.25);
             display: none;
-            max-height: 70vh;
             overflow-y: auto;
+            transition: all 0.3s ease;
         }
+        
         .carrito-panel.active {
             display: block;
             animation: slideUp 0.3s ease;
         }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .carrito-panel h3 {
+        
+        .carrito-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 12px;
+        }
+        
+        .carrito-header h3 {
             color: var(--verde);
             font-size: 1.1rem;
+            margin: 0;
         }
+        
+        .carrito-cerrar {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+            padding: 4px 8px;
+            min-height: 40px;
+            min-width: 40px;
+        }
+        
+        .carrito-cerrar:active {
+            color: #333;
+        }
+        
         #lista-carrito {
             list-style: none;
             margin-bottom: 12px;
@@ -553,6 +576,11 @@
             margin-top: 8px;
         }
         
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
         /* ===== UTILIDADES ===== */
         .section-header {
             text-align: center;
@@ -568,11 +596,8 @@
             font-size: 0.95rem;
         }
         .text-center { text-align: center; }
-        .mt-16 { margin-top: 16px; }
-        .mb-16 { margin-bottom: 16px; }
-        .w-full { width: 100%; }
         
-        /* ===== RESPONSIVE (Tablet/Desktop) ===== */
+        /* ===== RESPONSIVE ===== */
         @media (min-width: 600px) {
             .grid-productos,
             .grid-ofertas {
@@ -581,6 +606,16 @@
             }
             .contacto-grid {
                 grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .carrito-panel {
+                width: calc(100vw - 30px);
+                max-height: 50vh;
+                bottom: 70px;
+                right: 0;
+                padding: 16px;
             }
         }
         
@@ -670,7 +705,6 @@
         </div>
     </div>
 
-    <!-- Filtros (scroll horizontal) -->
     <div class="filtros-wrapper">
         <div class="filtros-container">
             <button class="filtro-btn active" data-categoria="todos">🌱 Todos</button>
@@ -729,13 +763,16 @@
     </div>
 </section>
 
-<!-- ===== CARRITO FLOTANTE ===== -->
-<div class="carrito-flotante">
-    <button class="carrito-toggle" id="carritoToggle">
+<!-- ===== CARRITO FLOTANTE (MEJORADO) ===== -->
+<div class="carrito-flotante" id="carrito">
+    <button class="carrito-toggle" id="carritoToggle" aria-label="Abrir carrito">
         🛒 <span id="contador-carrito">0</span>
     </button>
     <div class="carrito-panel" id="carritoPanel">
-        <h3>🛒 Tu Pedido</h3>
+        <div class="carrito-header">
+            <h3>🛒 Tu Pedido</h3>
+            <button class="carrito-cerrar" id="carritoCerrar">✕</button>
+        </div>
         <ul id="lista-carrito">
             <li style="text-align:center;color:#999;padding:12px 0;">Carrito vacío</li>
         </ul>
@@ -750,6 +787,7 @@
     // ===== DATOS Y LÓGICA PRINCIPAL =====
     let productos = [];
     let carrito = [];
+    let carritoAbierto = false;
 
     // Cargar productos desde data.json
     async function cargarDatos() {
@@ -835,20 +873,22 @@
         });
     }
 
-    // ===== CARRITO =====
-    function agregarAlCarrito(producto) {
-        const existente = carrito.find(item => item.id === producto.id);
-        if (existente) {
-            existente.cantidad++;
+    // ===== CARRITO MEJORADO =====
+    function toggleCarrito(estado) {
+        if (estado === undefined) {
+            carritoAbierto = !carritoAbierto;
         } else {
-            carrito.push({ ...producto, cantidad: 1 });
+            carritoAbierto = estado;
         }
-        actualizarCarrito();
-        // Feedback táctil
-        const btn = document.querySelector(`.btn-agregar[data-id="${producto.id}"]`);
-        if (btn) {
-            btn.textContent = '✅ Agregado';
-            setTimeout(() => { btn.textContent = '➕ Agregar'; }, 800);
+        
+        if (carritoAbierto) {
+            document.getElementById('carritoPanel').classList.add('active');
+            document.getElementById('carritoToggle').classList.add('abierto');
+            document.getElementById('carritoToggle').setAttribute('aria-label', 'Cerrar carrito');
+        } else {
+            document.getElementById('carritoPanel').classList.remove('active');
+            document.getElementById('carritoToggle').classList.remove('abierto');
+            document.getElementById('carritoToggle').setAttribute('aria-label', 'Abrir carrito');
         }
     }
 
@@ -872,7 +912,7 @@
                 <li>
                     <span>${item.nombre} (x${item.cantidad})</span>
                     <span>$${subtotal}</span>
-                    <button onclick="eliminarDelCarrito(${index})">✕</button>
+                    <button onclick="eliminarDelCarrito(${index})" aria-label="Eliminar producto">✕</button>
                 </li>
             `;
         }).join('');
@@ -881,9 +921,38 @@
         contador.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
     }
 
+    function agregarAlCarrito(producto) {
+        const existente = carrito.find(item => item.id === producto.id);
+        if (existente) {
+            existente.cantidad++;
+        } else {
+            carrito.push({ ...producto, cantidad: 1 });
+        }
+        actualizarCarrito();
+        
+        // Feedback visual
+        const btn = document.querySelector(`.btn-agregar[data-id="${producto.id}"]`);
+        if (btn) {
+            btn.textContent = '✅ Agregado';
+            btn.style.background = '#27ae60';
+            setTimeout(() => {
+                btn.textContent = '➕ Agregar';
+                btn.style.background = '';
+            }, 800);
+        }
+        
+        // Abrir carrito automáticamente (opcional)
+        if (!carritoAbierto) {
+            toggleCarrito(true);
+        }
+    }
+
     function eliminarDelCarrito(index) {
         carrito.splice(index, 1);
         actualizarCarrito();
+        if (carrito.length === 0) {
+            toggleCarrito(false);
+        }
     }
 
     // ===== BUSCADOR =====
@@ -949,8 +1018,8 @@
         }
     });
 
-    // ===== EVENTOS =====
-    document.addEventListener('DOMContentLoaded', () => {
+    // ===== EVENTOS PRINCIPALES =====
+    document.addEventListener('DOMContentLoaded', function() {
         cargarDatos();
 
         // Menú hamburguesa
@@ -967,21 +1036,54 @@
             });
         });
 
-        // Carrito
-        document.getElementById('carritoToggle').addEventListener('click', function() {
-            document.getElementById('carritoPanel').classList.toggle('active');
+        // Carrito - Toggle
+        document.getElementById('carritoToggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleCarrito();
         });
 
-        document.getElementById('vaciarCarrito').addEventListener('click', () => {
-            carrito = [];
-            actualizarCarrito();
+        // Carrito - Cerrar
+        document.getElementById('carritoCerrar').addEventListener('click', function() {
+            toggleCarrito(false);
         });
 
-        document.getElementById('enviarWhatsApp').addEventListener('click', () => {
+        // Cerrar carrito al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const carrito = document.getElementById('carrito');
+            if (carritoAbierto && !carrito.contains(e.target)) {
+                toggleCarrito(false);
+            }
+        });
+
+        // Cerrar carrito al hacer scroll
+        document.addEventListener('scroll', function() {
+            if (carritoAbierto) {
+                toggleCarrito(false);
+            }
+        });
+
+        // Prevenir cierre al hacer clic dentro del panel
+        document.getElementById('carritoPanel').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Vaciar carrito
+        document.getElementById('vaciarCarrito').addEventListener('click', function() {
+            if (carrito.length === 0) return;
+            if (confirm('¿Vaciar todo el carrito?')) {
+                carrito = [];
+                actualizarCarrito();
+                toggleCarrito(false);
+            }
+        });
+
+        // Enviar WhatsApp
+        document.getElementById('enviarWhatsApp').addEventListener('click', function() {
             if (carrito.length === 0) {
                 alert('Agrega productos al carrito primero.');
                 return;
             }
+            
             let mensaje = '🌿 *Nuevo Pedido Vivero & Jardín* 🌿\n';
             let total = 0;
             carrito.forEach(item => {
@@ -990,8 +1092,10 @@
                 total += subtotal;
             });
             mensaje += `\n💰 *Total: $${total}*`;
-            mensaje += `\n\n📦 ¡Gracias por tu compra!`;
-            const numero = '5491123456789'; // CAMBIA ESTE NÚMERO
+            mensaje += `\n\n📦 ¡Gracias por tu compra! Envíame tu dirección.`;
+            
+            // CAMBIA ESTE NÚMERO
+            const numero = '5491123456789';
             window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
         });
 
@@ -1008,7 +1112,7 @@
             });
         });
 
-        // PDF (simple)
+        // PDF
         document.getElementById('descargarPDF').addEventListener('click', function() {
             if (productos.length === 0) {
                 alert('No hay productos para generar el PDF.');
